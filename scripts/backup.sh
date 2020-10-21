@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 mkdir -p /var/backups/inotify
 if echo $1 | grep -qP "\..*\.sw(p|x|px)$" ; then #for vim users
         exit 0
