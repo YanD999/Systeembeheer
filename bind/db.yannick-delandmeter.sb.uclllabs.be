@@ -1,6 +1,6 @@
 $TTL 604800
-@ IN SOA ns.yannick-delandmeter.sb.uclllabs.be. root.ns.yannick-delandmeter.sb.uclllabs.be (
-          10   ; Serial
+@ IN SOA yannick-delandmeter.sb.uclllabs.be. root.yannick-delandmeter.sb.uclllabs.be (
+          11   ; Serial
          300   ; Refresh // ipv 604800, want 5minuten is beter dan een dag om te testen ofzo
        86400   ; Retry
      2419200   ; Expire
