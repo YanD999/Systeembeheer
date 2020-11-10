@@ -4,7 +4,7 @@ $TTL 604800
          300   ; Refresh // ipv 604800, want 5minuten is beter dan een dag om te testen ofzo
        86400   ; Retry
      2419200   ; Expire
-      604800 ) ; Negative Cache TTL
+         300 ) ; Negative Cache TTL
 ;
 
 ; Name servers
