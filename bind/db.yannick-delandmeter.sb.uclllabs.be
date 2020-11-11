@@ -10,9 +10,10 @@ $TTL	300
 @       IN      NS      ns.yannick-delandmeter.sb.uclllabs.be.
 @       IN      NS      ns1.uclllabs.be.
 @       IN      NS      ns2.uclllabs.be.
+test	IN	NS	test.yannick-delandmeter.sb.uclllabs.be.
 
 ; Aliasses
 @	IN	A	193.191.177.223
 ns      IN      A       193.191.177.223
 www     IN      A       193.191.177.223
-;test    IN      A       193.191.177.254
+test    IN      A       193.191.177.254
