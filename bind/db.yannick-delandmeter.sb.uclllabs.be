@@ -1,10 +1,10 @@
 $TTL	300
 @       IN      SOA	yannick-delandmeter.sb.uclllabs.be. root.yannick-delandmeter.sb.uclllabs.be. (
-          			19   ; Serial
-         			300   ; Refresh
-       				86400   ; Retry
-     				2419200   ; Expire
-	       			86400 ) ; Negative Cache TTL
+				21   ; Serial
+				300   ; Refresh
+				86400   ; Retry
+				2419200   ; Expire
+				86400 ) ; Negative Cache TTL
 
 ; Name servers
 @       IN      NS      ns.yannick-delandmeter.sb.uclllabs.be.
@@ -13,9 +13,6 @@ $TTL	300
 @	IN	NS	ns.nick-dewyngaert.sb.uclllabs.be.
 
 ; Aliasses
-@	IN	A	193.191.177.223
 ns      IN      A       193.191.177.223
-www     IN      A       193.191.177.223
-www1	IN	A	193.191.177.223
-www2	IN	A	193.191.177.223
+www	IN	A	193.191.177.223
 test    IN      A       193.191.177.254
