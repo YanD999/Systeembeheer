@@ -6,12 +6,3 @@
 // organization
 //include "/etc/bind/zones.rfc1918";
 
-zone yannick-delandmeter.sb.uclllabs.be. {
-	type master;
-	file "/etc/bind/db.yannick-delandmeter.sb.uclllabs.be";
-};
-
-zone nick-dewyngaert.sb.uclllabs.be. {
-	type slave;
-	masters {193.191.177.186;};
-};
