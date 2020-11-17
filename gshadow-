@@ -57,4 +57,4 @@ systemd-coredump:!!::
 check:!::
 incron:!::
 ntp:!::
-bind:!::
+mysql:!::
