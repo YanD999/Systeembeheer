@@ -1,5 +1,5 @@
 $TTL	300
-@	IN	SOA	marko-kosmajac.sb.uclllabs.be. root.yannick-delandmeter.sb.uclllabs.be. (
+@	IN	SOA	yannick-delandmeter.sb.uclllabs.be. root.yannick-delandmeter.sb.uclllabs.be. (
 		             50         ; Serial
 			    300		; Refresh
 			  86400		; Retry
