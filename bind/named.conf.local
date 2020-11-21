@@ -8,7 +8,7 @@
 
 zone yannick-delandmeter.sb.uclllabs.be. {
 	type master;
-	file "/etc/bind/db.yannick-delandmeter.sb.uclllabs.be";
+	file "/etc/bind/zones/db.yannick-delandmeter.sb.uclllabs.be";
 };
 
 zone nick-dewyngaert.sb.uclllabs.be. {
