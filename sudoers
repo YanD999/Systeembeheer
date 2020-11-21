@@ -26,7 +26,7 @@ root	ALL=(ALL:ALL) ALL
 %sudo	ALL=(ALL:ALL) ALL
 
 # Ik als user mag:
-check  ALL=NOPASSWD: /usr/lib/nagios/plugins/check_apt, /usr/sbin/arp
+check  ALL=NOPASSWD: /usr/lib/nagios/plugins/check_apt, /usr/sbin/arp, /etc/scripts/dns_add_zone
 
 # See sudoers(5) for more information on "#include" directives:
 
