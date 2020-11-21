@@ -9,25 +9,25 @@ append_dot_mydomain = no
 # Uncomment the next line to generate "delayed mail" warnings
 #delay_warning_time = 4h
 
+readme_directory = no
+
 alias_maps = hash:/etc/aliases
 alias_database = hash:/etc/aliases
 mydestination = $myhostname, localhost.$mydomain, localhost
 relayhost = 
 mynetworks = 127.0.0.0/8
-inet_interfaces = loopback-only
 recipient_delimiter = +
 
 compatibility_level = 2
 
 # ADDED MYSELF FOR SMTP LAB
-myhostname = mail.example.com
-mydomain = example.com
+myhostname = mx.yannick-delandmeter.sb.uclllabs.be
+mydomain = yannick-delandmeter.sb.uclllabs.be
 myorigin = $mydomain
 smtp_bind_address = 123.123.123.123
 smtp_bind_address6 = 2a01:7c8:d001:2::1
 inet_interfaces = all
 inet_protocols = all
-mydestination = $myhostname, localhost.$mydomain, localhost
 smtpd_recipient_restrictions = permit_mynetworks
 home_mailbox = Maildir/
 
@@ -38,8 +38,8 @@ config_directory = /etc/postfix
 dovecot_destination_recipient_limit = 1
 smtp_tls_security_level = may
 smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
-smtpd_tls_cert_file=/etc/letsencrypt/live/mail.example.com/fullchain.pem
-smtpd_tls_key_file=/etc/letsencrypt/live/mail.example.com/privkey.pem
+smtpd_tls_cert_file=/etc/letsencrypt/live/secure.yannick-delandmeter.sb.uclllabs.be/fullchain.pem
+smtpd_tls_key_file=/etc/letsencrypt/live/secure.yannick-delandmeter.sb.uclllabs.be/privkey.pem
 smtpd_sasl_auth_enable = yes
 smtpd_sasl_security_options = noanonymous, noplaintext
 smtpd_sasl_tls_security_options = noanonymous
