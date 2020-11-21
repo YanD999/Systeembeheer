@@ -1,6 +1,6 @@
 $TTL	300
-@	IN	SOA	yannick-delandmeter.sb.uclllabs.be. root.yannick-delandmeter.sb.uclllabs.be. (
-		             50         ; Serial
+@	IN	SOA	ns.yannick-delandmeter.sb.uclllabs.be. root.yannick-delandmeter.sb.uclllabs.be. (
+		             51         ; Serial
 			    300		; Refresh
 			  86400		; Retry
 			2419200		; Expire
@@ -19,6 +19,6 @@ www1	IN	A	193.191.177.223
 www2	IN	A	193.191.177.223
 secure	IN	A	193.191.177.223
 supersecure	IN	A	193.191.177.223
-@	IN	MX 5	mx.yannick-delandmeter.sb.uclllabs.be.
-@	IN	MX	10 mx
+@	IN	MX	5	mx.yannick-delandmeter.sb.uclllabs.be.
+@	IN	MX	10	mx.yannick-delandmeter.sb.uclllabs.be.
 mx	IN	A	193.191.177.223
