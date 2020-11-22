@@ -25,13 +25,14 @@ then
 fi
 
 # bij CNAME is sub en parent nodig
-if [ "$RECORD" == "CNAME" ] then
-	if [ -z "$SUB" ] || [ -z "$IP" ];
-	then echo "Geef een parent en subdomein in"
-	exit 0
-	fi
+if [ "$RECORD" == "CNAME" ] 
+	then
+		if [ -z "$SUB" ] || [ -z "$IP" ]
+			then echo "Geef een parent en subdomein in"
+			exit 0
+		fi
 # bij de rest is sub, ip en parent nodig
-elif [ -z "$SUB" ] || [ -z "$IP" ] || [ -z "$PARENT" ];
+elif [ -z "$SUB" ] || [ -z "$IP" ] || [ -z "$PARENT" ]
 	then echo "Geef een parent, een ip en een subdomein in"
 	exit 0
 else
@@ -42,7 +43,7 @@ echo "record $RECORD" # wegdoen
 	case $RECORD in
 		A)
 			echo "sub $SUB ip $IP parent $PARENT" # wegdoen
-			echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/$PARENT"
+			echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/db.$PARENT"
 			;;
 		MX)
 			echo "sub $SUB ip $IP parent $PARENT  ip moet leeg zijn"
@@ -50,7 +51,7 @@ echo "record $RECORD" # wegdoen
 			;;
 		CNAME)
 			echo "sub $SUB ip $IP parent $PARENT"
-			echo "$SUB	IN	CNAME	$PARENT" >> "/etc/bind/zones/$PARENT"
+			echo "$SUB	IN	CNAME	$PARENT" >> "/etc/bind/zones/db.$PARENT"
 			;;
 	esac
 fi
