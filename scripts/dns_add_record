@@ -46,6 +46,8 @@ echo "record $RECORD" # wegdoen
 			echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/db.$PARENT"
 			;;
 		MX)
+			echo "@	IN	MX	$IP	$SUB.$PARENT." >> "/etc/bind/zones/db.$PARENT"
+			echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/db.$PARENT"
 			echo "sub $SUB ip $IP parent $PARENT  ip moet leeg zijn"
 # gebruik variabele ip als parent
 			;;
