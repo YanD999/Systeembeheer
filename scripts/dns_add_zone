@@ -35,4 +35,11 @@ ns	IN	A	193.191.177.223" >> $(echo "/etc/bind/zones/db.mrt.$ZONE.yannick-delandm
 # add to my db for delegation
 echo "$ZONE	IN	NS	ns.yannick-delandmeter.sb.uclllabs.be." >> /etc/bind/zones/db.yannick-delandmeter.sb.uclllabs.be
 
+# update serial
+
+var="`grep -A 0 'Serial' /etc/bind/zones/db.yannick-delandmeter.sb.uclllabs.be | grep -oP '[0-9]*'`"
+new=$((var+1))
+sed -i "s/.*Serial.*/\t\t\t     $new\t\t; Serial/g" /etc/bind/zones/db.yannick-delandmeter.sb.uclllabs.be
+
+
 fi
