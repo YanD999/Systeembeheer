@@ -1,0 +1,50 @@
+#!/bin/bash
+# zone name
+
+#SUB=""
+#PARENT=""
+
+# if option -t
+while getopts ":t:" opt; do
+  if [ $opt == "t" ]
+then
+	RECORD="$OPTARG"
+	SUB=$3
+	IP=$4
+	PARENT=$5
+fi
+done
+
+# if no -t option
+if [ -z "$SUB" ]
+then
+	RECORD="A"
+	SUB=$1
+	IP=$2
+	PARENT=$3
+fi
+
+if [ -z "$SUB" ] || [ -z "$IP" ];
+then
+	echo "Geef een parent en subdomein in"
+	exit 0
+else
+
+# case record type
+
+echo "record $RECORD" # wegdoen
+	case $RECORD in
+		A)
+			echo "sub $SUB ip $IP parent $PARENT" # wegdoen
+			echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/$PARENT"
+			;;
+		MX)
+			echo "sub $SUB ip $IP parent $PARENT  ip moet leeg zijn"
+# gebruik variabele ip als parent
+			;;
+		CNAME)
+			echo "sub $SUB ip $IP parent $PARENT"
+			echo "$SUB	IN	CNAME	$PARENT" >> "/etc/bind/zones/$PARENT"
+			;;
+	esac
+fi
