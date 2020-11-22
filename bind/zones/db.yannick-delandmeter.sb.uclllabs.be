@@ -1,6 +1,6 @@
 $TTL	300
 @	IN	SOA	ns.yannick-delandmeter.sb.uclllabs.be. root.yannick-delandmeter.sb.uclllabs.be. (
-			     73		; Serial
+			     74		; Serial
 			    300		; Refresh
 			  86400		; Retry
 			2419200		; Expire
