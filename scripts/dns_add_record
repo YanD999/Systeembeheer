@@ -45,8 +45,6 @@ case $RECORD in
 	MX)
 		echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/db.$PARENT";;
 	CNAME)
-		echo "sub $SUB ip $IP parent $PARENT ip moet leeg zijn"
-		echo "$SUB	IN	CNAME	$IP." >> "/etc/bind/zones/db.$IP"
-		;;
+		echo "$SUB	IN	CNAME	$IP." >> "/etc/bind/zones/db.$IP";;
 esac
 
