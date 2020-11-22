@@ -24,9 +24,15 @@ then
 	PARENT=$3
 fi
 
-if [ -z "$SUB" ] || [ -z "$IP" ];
-then
-	echo "Geef een parent en subdomein in"
+# bij CNAME is sub en parent nodig
+if [ "$RECORD" == "CNAME" ] then
+	if [ -z "$SUB" ] || [ -z "$IP" ];
+	then echo "Geef een parent en subdomein in"
+	exit 0
+	fi
+# bij de rest is sub, ip en parent nodig
+elif [ -z "$SUB" ] || [ -z "$IP" ] || [ -z "$PARENT" ];
+	then echo "Geef een parent, een ip en een subdomein in"
 	exit 0
 else
 
