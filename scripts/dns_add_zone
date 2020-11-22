@@ -5,7 +5,7 @@ ZONE=$1
 # check empty
 if [ -z "$ZONE" ]
 then
-	echo "Geen naam gegeven"
+	echo "Geen zone naam gegeven"
 else
 
 	# add ns record
@@ -31,5 +31,8 @@ else
 ; A records
 @	IN	A	193.191.177.223
 ns	IN	A	193.191.177.223" >> $(echo "/etc/bind/zones/db.mrt.$ZONE.yannick-delandmeter.sb.uclllabs.be")
+
+# add to my db for delegation
+echo "$ZONE	IN	NS	ns.yannick-delandmeter.sb.uclllabs.be." >> /etc/bind/zones/db.yannick-delandmeter.sb.uclllabs.be
 
 fi
