@@ -1,0 +1,19 @@
+\nzone .yannick-delandmeter.sb.uclllabs.be. {
+	type master;
+	file "/etc/bind/zones/db.mrt..yannick-delandmeter.sb.uclllabs.be";
+};
+
+zone max.yannick-delandmeter.sb.uclllabs.be. {
+	type master;
+	file "/etc/bind/zones/db.mrt.max.yannick-delandmeter.sb.uclllabs.be";
+};
+
+zone max.yannick-delandmeter.sb.uclllabs.be. {
+	type master;
+	file "/etc/bind/zones/db.mrt.max.yannick-delandmeter.sb.uclllabs.be";
+};
+
+zone max.yannick-delandmeter.sb.uclllabs.be. {
+	type master;
+	file "/etc/bind/zones/db.mrt.max.yannick-delandmeter.sb.uclllabs.be";
+};
