@@ -16,7 +16,7 @@ fi
 done
 
 # if no -t option
-if [ -z "$SUB" ]
+if [ -z "$RECORD" ]
 then
 	RECORD="A"
 	SUB=$1
@@ -27,7 +27,7 @@ fi
 # bij CNAME is sub en parent nodig
 if [ "$RECORD" == "CNAME" ] 
 	then
-		if [ -z "$SUB" ] || [ -z "$IP" ]
+		if [ -z "$SUB" ] || [ -z "$IP" ] || [ ! -z "$PARENT" ]
 			then echo "Geef een parent en subdomein in"
 			exit 0
 		fi
@@ -35,25 +35,18 @@ if [ "$RECORD" == "CNAME" ]
 elif [ -z "$SUB" ] || [ -z "$IP" ] || [ -z "$PARENT" ]
 	then echo "Geef een parent, een ip en een subdomein in"
 	exit 0
-else
+fi
 
 # case record type
+echo "case" # wegdoen
+case $RECORD in
+	A)
+		echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/db.$PARENT";;
+	MX)
+		echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/db.$PARENT";;
+	CNAME)
+		echo "sub $SUB ip $IP parent $PARENT ip moet leeg zijn"
+		echo "$SUB	IN	CNAME	$IP." >> "/etc/bind/zones/db.$IP"
+		;;
+esac
 
-echo "record $RECORD" # wegdoen
-	case $RECORD in
-		A)
-			echo "sub $SUB ip $IP parent $PARENT" # wegdoen
-			echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/db.$PARENT"
-			;;
-		MX)
-			echo "@	IN	MX	$IP	$SUB.$PARENT." >> "/etc/bind/zones/db.$PARENT"
-			echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/db.$PARENT"
-			echo "sub $SUB ip $IP parent $PARENT  ip moet leeg zijn"
-# gebruik variabele ip als parent
-			;;
-		CNAME)
-			echo "sub $SUB ip $IP parent $PARENT"
-			echo "$SUB	IN	CNAME	$PARENT" >> "/etc/bind/zones/db.$PARENT"
-			;;
-	esac
-fi
