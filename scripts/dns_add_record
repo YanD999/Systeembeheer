@@ -1,8 +1,4 @@
 #!/bin/bash
-# zone name
-
-#SUB=""
-#PARENT=""
 
 # must be root
 if [ "$EUID" -ne 0 ]
@@ -67,7 +63,7 @@ var="`grep -A 0 'Serial' $PATH | grep -oP '[0-9]*'`"
 sed -i "s/.*Serial.*/\t\t\t     $((var+1))\t\t; Serial/g" "$PATH"
 
 # reload file
-rndc reloadd
+rndc reload
 
 # restart bind
 systemctl restart bind9
