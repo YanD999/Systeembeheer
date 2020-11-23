@@ -23,13 +23,13 @@ else
 	# vhost
 echo "<VirtualHost *:80>
     ServerName $DOMAIN
-    DocumentRoot /var/www/$DOMAIN
+    DocumentRoot /var/www/html/$DOMAIN
     ErrorLog \${APACHE_LOG_DIR}/$DOMAIN-error.log
     CustomLog \${APACHE_LOG_DIR}/$DOMAIN-access.log combined
 </VirtualHost>" >> "/etc/apache2/sites-available/$DOMAIN.conf"
 
 	# create dir
-	mkdir "/var/www/html/$DOMAIN" && touch "/var/www/html/$DOMAIN/index.html"
+#	mkdir "/var/www/html/$DOMAIN" && touch "/var/www/html/$DOMAIN/index.html"
 
 	# vhost name in index
 	echo "Welcome  $DOMAIN" >> "/var/www/html/$DOMAIN/index.html"
