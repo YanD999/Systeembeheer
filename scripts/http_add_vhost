@@ -36,4 +36,7 @@ echo "<VirtualHost *:80>
 
 	# enable vhost
 	a2ensite $DOMAIN
+
+	# reload
+	systemctl reload apache2
 fi
