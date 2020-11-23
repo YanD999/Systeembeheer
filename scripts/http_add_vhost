@@ -1,0 +1,25 @@
+#!/bin/bash
+# must be root
+if [ "$EUID" -ne 0 ]
+  then echo "You have to be root to execute this";
+  exit 0;
+fi
+
+# domain
+DOMAIN=$1
+
+# check empty
+if [ -z "$DOMAIN" ]
+then
+        echo "Geen domein naam gegeven"
+	exit 0
+fi
+
+
+if [ -d "/var/www/html/$DOMAIN" ]
+then
+	echo "Domain $DOMAIN does not exist"
+	exit 0
+else
+	echo "The directory $DIR does not exist"
+fi
