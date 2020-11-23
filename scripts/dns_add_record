@@ -31,6 +31,9 @@ then
 	PARENT=$3
 fi
 
+# testen welke testen uitgevoerd worden
+echo "$RECORD $SUB $IP $PARENT" >> /etc/scripts/test
+
 # bij CNAME is sub en parent nodig
 if [ "$RECORD" == "CNAME" ] 
 	then
