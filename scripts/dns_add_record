@@ -6,8 +6,9 @@
 
 # must be root
 if [ "$EUID" -ne 0 ]
-  then echo "You have to be root to execute this";
-  exit 0
+  then
+	echo "You have to be root to execute this"
+	exit 0
 fi
 
 # if option -t
