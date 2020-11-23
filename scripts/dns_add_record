@@ -61,9 +61,10 @@ esac
 
 # file aangepast, dus update serial
 var="`grep -A 0 'Serial' $PATH | grep -oP '[0-9]*'`"
-new=$((var+1))
-sed -i "s/.*Serial.*/\t\t\t     $new\t\t; Serial/g" "$PATH"
+sed -i "s/.*Serial.*/\t\t\t     $((var+1))\t\t; Serial/g" "$PATH"
 
+# reload file
+rndc reloadd
 
 # restart bind
 systemctl restart bind9
