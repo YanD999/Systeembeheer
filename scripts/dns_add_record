@@ -44,23 +44,26 @@ elif [ -z "$SUB" ] || [ -z "$IP" ] || [ -z "$PARENT" ]
 fi
 
 # case record type
-echo "case" # wegdoen
 case $RECORD in
 	A)
-		echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/db.$PARENT"
-		PATH = "/etc/bind/zones/db.$PARENT";;
+		echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/db.$PARENT";;
 	MX)
 		echo "@	IN	MX	10	$SUB.$PARENT." >> "/etc/bind/zones/db.$PARENT"
-		echo "$SUB	in	A	$IP" >> "/etc/bind/zones/db.$PARENT"
-		PATH = "/etc/bind/zones/db.$PARENT";;
+		echo "$SUB	in	A	$IP" >> "/etc/bind/zones/db.$PARENT";;
 	CNAME)
-		echo "$SUB	IN	CNAME	$IP." >> "/etc/bind/zones/db.$IP"
-		PATH = "/etc/bind/zones/db.$IP";;
+		echo "$SUB	IN	CNAME	$IP." >> "/etc/bind/zones/db.$IP";;
 esac
 
-# file aangepast, dus update serial
-var="`grep -A 0 'Serial' $PATH | grep -oP '[0-9]*'`"
-sed -i "s/.*Serial.*/\t\t\t     $((var+1))\t\t; Serial/g" "$PATH"
+# update serial
+if [ $RECORD == "A" ] || [ $RECORD == "MX" ]
+then
+	VAL="`grep -A 0 'Serial' /etc/bind/zones/db.$PARENT | grep -oP '[0-9]*'`"
+	sed -i "s/.*Serial.*/\t\t\t	$((VAL+1))\t\t; Serial/g" /etc/bind/zones/db.$PARENT
+elif [ $RECORD == "CNAME" ]
+then
+	VAL="`grep -A 0 'Serial' /etc/bind/zones/db.$IP | grep -oP '[0-9]*'`"
+	sed -i "s/.*Serial.*/\t\t\t	$((VAL+1))\t\t; Serial/g" /etc/bind/zones/db.$IP
+fi
 
 # reload file
 rndc reload
