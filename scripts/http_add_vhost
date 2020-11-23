@@ -16,10 +16,24 @@ then
 fi
 
 
-if [ -d "/var/www/html/$DOMAIN" ]
+if [ ! -d "/var/www/html/$DOMAIN" ]
 then
 	echo "Domain $DOMAIN does not exist"
-	exit 0
 else
-	echo "The directory $DIR does not exist"
+	# vhost
+echo "<VirtualHost *:80>
+    ServerName $DOMAIN
+    DocumentRoot /var/www/$DOMAIN
+    ErrorLog \${APACHE_LOG_DIR}/$DOMAIN-error.log
+    CustomLog \${APACHE_LOG_DIR}/$DOMAIN-access.log combined
+</VirtualHost>" >> "/etc/apache2/sites-available/$DOMAIN.conf"
+
+	# create dir
+	mkdir "/var/www/html/$DOMAIN" && touch "/var/www/html/$DOMAIN/index.html"
+
+	# vhost name in index
+	echo "Welcome  $DOMAIN" >> "/var/www/html/$DOMAIN/index.html"
+
+	# enable vhost
+	a2ensite $DOMAIN
 fi
