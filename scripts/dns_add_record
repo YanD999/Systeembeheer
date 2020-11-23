@@ -56,3 +56,5 @@ case $RECORD in
 		echo "$SUB	IN	CNAME	$IP." >> "/etc/bind/zones/db.$IP";;
 esac
 
+# restart bind
+systemctl restart bind9
