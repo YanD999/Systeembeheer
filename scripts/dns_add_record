@@ -48,13 +48,22 @@ fi
 echo "case" # wegdoen
 case $RECORD in
 	A)
-		echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/db.$PARENT";;
+		echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/db.$PARENT"
+		PATH = "/etc/bind/zones/db.$PARENT";;
 	MX)
 		echo "@	IN	MX	10	$SUB.$PARENT." >> "/etc/bind/zones/db.$PARENT"
-		echo "$SUB	in	A	$IP" >> "/etc/bind/zones/db.$PARENT";;
+		echo "$SUB	in	A	$IP" >> "/etc/bind/zones/db.$PARENT"
+		PATH = "/etc/bind/zones/db.$PARENT";;
 	CNAME)
-		echo "$SUB	IN	CNAME	$IP." >> "/etc/bind/zones/db.$IP";;
+		echo "$SUB	IN	CNAME	$IP." >> "/etc/bind/zones/db.$IP"
+		PATH = "/etc/bind/zones/db.$IP";;
 esac
+
+# file aangepast, dus update serial
+var="`grep -A 0 'Serial' $PATH | grep -oP '[0-9]*'`"
+new=$((var+1))
+sed -i "s/.*Serial.*/\t\t\t     $new\t\t; Serial/g" "$PATH"
+
 
 # restart bind
 systemctl restart bind9
