@@ -32,7 +32,7 @@ then
 fi
 
 # testen welke testen uitgevoerd worden
-echo "$RECORD $SUB $IP $PARENT" >> /etc/scripts/test
+echo "$*" >> /etc/scripts/test
 
 # bij CNAME is sub en parent nodig
 if [ "$RECORD" == "CNAME" ] 
