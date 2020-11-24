@@ -1,16 +1,15 @@
 #!/bin/bash
-# zone name
 
 # must be root
-if [ "$EUID" -ne 0 ]
-  then 
-	echo "You have to be root to execute this"
-	exit 0
-fi
+#if [ "$EUID" -ne 0 ]
+#  then 
+#	echo "You have to be root to execute this"
+#	exit 0
+#fi
 
 # if option -t
 while getopts ":t:" opt; do
-  if [ $opt == "t" ]
+  if [[ $opt == "t" ]]
 then
         RECORD="$OPTARG"
         SUB=$3
@@ -22,6 +21,7 @@ done
 # if no -t option
 if [ -z "$RECORD" ]
 then
+	echo "No parameter -t given -> default A record"
         RECORD="A"
         SUB=$1
         IP=$2
@@ -29,7 +29,7 @@ then
 fi
 
 # bij CNAME is sub en parent nodig
-if [ "$RECORD" == "CNAME" ]
+if [[ "$RECORD" == "CNAME" ]]
         then
                 if [ -z "$SUB" ] || [ -z "$IP" ] || [ ! -z "$PARENT" ]
                         then echo "Geef een parent en subdomein in"
@@ -48,7 +48,7 @@ case $RECORD in
                 echo "$SUB      IN      A       $IP" >> "/etc/bind/zones/db.$PARENT"
                 PATH = "/etc/bind/zones/db.$PARENT";;
         MX)
-                echo "@ IN      MX      10      $SUB.$PARENT." >> "/etc/bind/zones/db.$PARENT"
+                echo "@ IN      MX      $SUB.$PARENT." >> "/etc/bind/zones/db.$PARENT"
                 echo "$SUB      in      A       $IP" >> "/etc/bind/zones/db.$PARENT"
                 PATH = "/etc/bind/zones/db.$PARENT";;
         CNAME)
