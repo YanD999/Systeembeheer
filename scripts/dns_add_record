@@ -9,48 +9,58 @@ fi
 
 if  [[ $1 == "-t" ]]; then
 	RECORD=$2
+	SUB=$3
+	IP=$4
+	PARENT=$5
 else
 	RECORD="A"
+	SUB=$1
+	IP=$2
+	PARENT=$3
 fi
 
-if [[ $record == "A" ]]
+if [[ $RECORD == "A" ]]
 then
-	if [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]
+	if [ -z "$SUB" ] || [ -z "$IP" ] || [ -z "$PARENT" ]
 	then
 		echo "Geef een parent, een ip en een subdomein in"
+		exit 0;
 	else
-	        echo "$3        IN      A       $4" >> /etc/bind/zones/db.$5;
-        	PAD="/etc/bind/zones/db.$5"
+	        echo "$SUB	IN	A	$IP" >> /etc/bind/zones/db.$PARENT
+        	PAD="/etc/bind/zones/db.$PARENT";
 	fi
-elif [[ $record == "MX" ]]
+elif [[ $RECORD == "MX" ]]
 then
-        if [ -z "$3" ] || [ -z "$4" ] || [ -z "$5" ]
+        if [ -z "$SUB" ] || [ -z "$IP" ] || [ -z "$PARENT" ]
 	then
 		echo "Geef een parent, een ip en een subdomein in"
+		exit 0;
 	else
-	        echo "@        IN      MX      10      $3.$5." >> /etc/bind/zones/db.$5
-       		echo "$3        IN      A       $4" >> /etc/bind/zones/db.$5
-        	PAD="/etc/bind/zones/db.$5"
+	        echo "@	IN	MX	10	$SUB.$PARENT." >> /etc/bind/zones/db.$PARENT
+       		echo "$SUB	IN	A	$IP" >> /etc/bind/zones/db.$PARENT
+        	PAD="/etc/bind/zones/db.$PARENT";
 	fi
-elif [[ $record == "CNAME" ]]
+elif [[ $RECORD == "CNAME" ]]
 then
-        if [ -z "$3" ] || [ -z "$4" ]
+        if [ -z "$SUB" ] || [ -z "$IP" ]
 	then
 		echo "Geef een parent en subdomein in"
+		exit 0;
 	else
-	        echo "$3        IN      CNAME   $4." >> /etc/bind/zones/db.$4
-        	PAD="/etc/bind/zones/db.$4"
+	        echo "$SUB	IN	CNAME	$IP." >> /etc/bind/zones/db.$IP
+        	PAD="/etc/bind/zones/db.$IP";
 	fi
 fi
 
-# file aangepast, dus update serial
-var="`grep -A 0 'Serial' $PATH | grep -oP '[0-9]*'`"
-sed -i "s/.*Serial.*/\t\t\t     $((var+1))\t\t; Serial/g" "$PATH"
+# update serial
+var="`grep -A 0 'Serial' $PAD | grep -oP '[0-9]*'`"
+new=$((var+1))
+sed -i "s/.*Serial.*/\t\t\t     $new\t\t; Serial/g $PAD"
 
-
-# file aangepast, dus update serial copy test
-var="`grep -A 0 'Serial' /etc/bind/zones/db.copy.sb.uclllabs.be | grep -oP '[0-9]*'`"
-sed -i "s/.*Serial.*/\t\t\t     $((var+1))\t\t; Serial/g" /etc/bind/zones/db.copy.sb.uclllabs.be
+# update serial
+var="`grep -A 0 'Serial' /etc/bind/zones/db.copy.uclllabs.be | grep -oP '[0-9]*'`"
+new=$((var+1))
+sed -i "s/.*Serial.*/\t\t\t     $new\t\t; Serial/g" /etc/bind/zones/db.copy.uclllabs.be
 
 # reload file
 rndc reload
