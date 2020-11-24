@@ -1,69 +1,44 @@
-#!/bin/bash
+k#!/bin/bash
 
 # must be root
 if [ "$EUID" -ne 0 ]
   then
-	echo "You have to be root to execute this"
-	exit 0
+        echo "You have to be root to execute this"
+        exit 0
 fi
 
-# if option -t
-while getopts ":t:" opt; do
-  if [[ $opt == "t" ]]
-then
-	RECORD="$OPTARG"
-	SUB=$3
-	IP=$4
-	PARENT=$5
-fi
-done
-
-# if no -t option
-if [ -z "$RECORD" ]
-then
+if  [[ $1 == "-t" ]]; then
+	RECORD=$2
+else 
 	RECORD="A"
-	SUB=$1
-	IP=$2
-	PARENT=$3
-fi
+fi        
 
-# testen welke testen uitgevoerd worden
-echo "$*" >> /etc/scripts/test
-
-# bij CNAME is sub en parent nodig
-if [[ "$RECORD" == "CNAME" ]]
-	then
-		if [ -z "$SUB" ] || [ -z "$IP" ] || [ ! -z "$PARENT" ]
-			then echo "Geef een parent en subdomein in"
-			exit 0
-		fi
-# bij de rest is sub, ip en parent nodig
-elif [ -z "$SUB" ] || [ -z "$IP" ] || [ -z "$PARENT" ]
-	then echo "Geef een parent, een ip en een subdomein in"
-	exit 0
-fi
-
-# case record type
-case $RECORD in
-	A)
-		echo "$SUB	IN	A	$IP" >> "/etc/bind/zones/db.$PARENT";;
-	MX)
-		echo "@	IN	MX	10	$SUB.$PARENT." >> "/etc/bind/zones/db.$PARENT"
-		echo "$SUB	in	A	$IP" >> "/etc/bind/zones/db.$PARENT";;
-	CNAME)
-		echo "$SUB	IN	CNAME	$IP." >> "/etc/bind/zones/db.$IP";;
-esac
-
-# update serial
-if [[ $RECORD == "A" ]] || [[ $RECORD == "MX" ]]
+if [[ $record == "A" ]]
 then
-	VAL="`grep -A 0 'Serial' /etc/bind/zones/db.$PARENT | grep -oP '[0-9]*'`"
-	sed -i "s/.*Serial.*/\t\t\t	$((VAL+1))\t\t; Serial/g" /etc/bind/zones/db.$PARENT
-elif [[ $RECORD == "CNAME" ]]
+        echo "$3        IN      A       $4" >> /etc/bind/zones/db.$5;
+        PAD="/etc/bind/zones/db.$5"
+
+elif [[ $record == "MX" ]]
 then
-	VAL="`grep -A 0 'Serial' /etc/bind/zones/db.$IP | grep -oP '[0-9]*'`"
-	sed -i "s/.*Serial.*/\t\t\t	$((VAL+1))\t\t; Serial/g" /etc/bind/zones/db.$IP
+        echo "@        IN      MX      10      $3.$5." >> /etc/bind/zones/db.$5
+        echo "$3        IN      A       $4" >> /etc/bind/zones/db.$5
+        PAD="/etc/bind/zones/db.$5"
+
+elif [[ $record == "CNAME" ]]
+then
+        echo "$3        IN      CNAME   $4." >> /etc/bind/zones/db.$4
+        PAD="/etc/bind/zones/db.$4"
+
 fi
+
+# file aangepast, dus update serial
+var="`grep -A 0 'Serial' $PATH | grep -oP '[0-9]*'`"
+sed -i "s/.*Serial.*/\t\t\t     $((var+1))\t\t; Serial/g" "$PATH"
+
+
+# file aangepast, dus update serial copy test
+var="`grep -A 0 'Serial' /etc/scripts/copy.be | grep -oP '[0-9]*'`"
+sed -i "s/.*Serial.*/\t\t\t     $((var+1))\t\t; Serial/g" /etc/scripts/copy.be
 
 # reload file
 rndc reload
