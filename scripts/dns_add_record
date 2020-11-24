@@ -55,12 +55,8 @@ fi
 # update serial
 var="`grep -A 0 'Serial' $PAD | grep -oP '[0-9]*'`"
 new=$((var+1))
+echo "pad $PAD nieuw $new"
 sed -i "s/.*Serial.*/\t\t\t     $new\t\t; Serial/g $PAD"
-
-# update serial
-var="`grep -A 0 'Serial' /etc/bind/zones/db.copy.uclllabs.be | grep -oP '[0-9]*'`"
-new=$((var+1))
-sed -i "s/.*Serial.*/\t\t\t     $new\t\t; Serial/g" /etc/bind/zones/db.copy.uclllabs.be
 
 # reload file
 rndc reload
