@@ -1,6 +1,6 @@
 $TTL	300
 @	IN	SOA	ns.yannick-delandmeter.sb.uclllabs.be. root.yannick-delandmeter.sb.uclllabs.be. (
-			     81		; Serial
+			     93		; Serial
 			    300		; Refresh
 			  86400		; Retry
 			2419200		; Expire
@@ -28,10 +28,6 @@ secure.yannick-delandmeter.sb.uclllabs.be.   IN      CAA     0 iodef "mailto:yan
 supersecure.yannick-delandmeter.sb.uclllabs.be.   IN      CAA     0 issue "letsencrypt.org"
 supersecure.yannick-delandmeter.sb.uclllabs.be.   IN      CAA     0 iodef "mailto:yannick-delandmeter@student.ucll.be"
 
-subzoneoigai5	IN	NS	ns.yannick-delandmeter.sb.uclllabs.be.
-subzonena3cim	IN	NS	ns.yannick-delandmeter.sb.uclllabs.be.
-
 ; CAA records
 @	IN	CAA	0 issue "letsencrypt.org"
 @	IN	CAA	0 iodef "mailto:yannick.delandmeter@student.ucll.be"
-
