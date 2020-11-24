@@ -55,3 +55,4 @@ smtpd_sasl_path = private/auth
 virtual_mailbox_domains = mysql:/etc/postfix/virtual-mailbox-domains.cf
 virtual_mailbox_maps = mysql:/etc/postfix/virtual-mailbox-users.cf
 virtual_alias_maps = mysql:/etc/postfix/virtual-alias-maps.cf, mysql:/etc/postfix/mysql-virtual-email2email.cf
+virtual_mailbox_base = /var/mail/vhosts
