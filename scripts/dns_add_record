@@ -1,65 +1,45 @@
 #!/bin/bash
+if [ -n $1 ]; then
 
-# must be root
-if [ "$EUID" -ne 0 ]
-  then
-        echo "You have to be root to execute this"
-        exit 0
-fi
-
-if  [[ $1 == "-t" ]]; then
+	if  [[ $1 = "-t" ]]
+	then
 	RECORD=$2
-	SUB=$3
-	IP=$4
-	PARENT=$5
+
+        if [ $record = "A" ]; then
+	        echo "$3 in a $4 to db.$5"
+        	echo "$3        IN      A       $4" >> /etc/bind/zones/db.$5;
+       		LINK="/etc/bind/zones/db.$5"
+
+        elif [ $record = "MX" ]; then
+        	echo " @        IN      MX      10      $3.$5." >> /etc/bind/zones/db.$5
+        	echo "$3        IN      A       $4" >> /etc/bind/zones/db.$5
+	        LINK="/etc/bind/zones/db.$5"
+
+        elif [ $record = "CNAME" ]; then
+        	echo "$3        IN      CNAME   $4." >> /etc/bind/zones/db.$4
+	        LINK="/etc/bind/zones/db.$4"
+
+        fi
+
 else
-	RECORD="A"
-	SUB=$1
-	IP=$2
-	PARENT=$3
+        echo "$1        IN      A       $2">> /etc/bind/zones/db.$3
+       	LINK="/etc/bind/zones/db.$3"
+
 fi
 
-if [[ $RECORD == "A" ]]
-then
-	if [ -z "$SUB" ] || [ -z "$IP" ] || [ -z "$PARENT" ]
-	then
-		echo "Geef een parent, een ip en een subdomein in"
-		exit 0;
-	else
-	        echo "$SUB	IN	A	$IP" >> /etc/bind/zones/db.$PARENT
-        	PAD="/etc/bind/zones/db.$PARENT";
-	fi
-elif [[ $RECORD == "MX" ]]
-then
-        if [ -z "$SUB" ] || [ -z "$IP" ] || [ -z "$PARENT" ]
-	then
-		echo "Geef een parent, een ip en een subdomein in"
-		exit 0;
-	else
-	        echo "@	IN	MX	10	$SUB.$PARENT." >> /etc/bind/zones/db.$PARENT
-       		echo "$SUB	IN	A	$IP" >> /etc/bind/zones/db.$PARENT
-        	PAD="/etc/bind/zones/db.$PARENT";
-	fi
-elif [[ $RECORD == "CNAME" ]]
-then
-        if [ -z "$SUB" ] || [ -z "$IP" ]
-	then
-		echo "Geef een parent en subdomein in"
-		exit 0;
-	else
-	        echo "$SUB	IN	CNAME	$IP." >> /etc/bind/zones/db.$IP
-        	PAD="/etc/bind/zones/db.$IP";
-	fi
-fi
-
-# update serial
-var="`grep -A 0 'Serial' $PAD | grep -oP '[0-9]*'`"
+#increase serial
+line=$(grep "Serial" "$LINK")
+echo $line
+var=$(echo $line |  grep -Eo '[0-9]{1,9}')
+echo $var
 new=$((var+1))
-echo "pad $PAD nieuw $new"
-sed -i "s/.*Serial.*/\t\t\t     $new\t\t; Serial/g $PAD"
+echo $new
+new="$new   ; Serial"
+echo $new
+sed -i "s/.*Serial.*/\t\t\t     $new/g" "$LINK"
 
-# reload file
+#reload rndc
 rndc reload
 
-# restart bind
+#restart bind9
 systemctl restart bind9
