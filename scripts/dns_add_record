@@ -9,7 +9,7 @@ fi
 
 # if option -t
 while getopts ":t:" opt; do
-  if [ $opt == "t" ]
+  if [[ $opt == "t" ]]
 then
 	RECORD="$OPTARG"
 	SUB=$3
@@ -31,7 +31,7 @@ fi
 echo "$*" >> /etc/scripts/test
 
 # bij CNAME is sub en parent nodig
-if [ "$RECORD" == "CNAME" ] 
+if [[ "$RECORD" == "CNAME" ]]
 	then
 		if [ -z "$SUB" ] || [ -z "$IP" ] || [ ! -z "$PARENT" ]
 			then echo "Geef een parent en subdomein in"
@@ -55,11 +55,11 @@ case $RECORD in
 esac
 
 # update serial
-if [ $RECORD == "A" ] || [ $RECORD == "MX" ]
+if [[ $RECORD == "A" ]] || [[ $RECORD == "MX" ]]
 then
 	VAL="`grep -A 0 'Serial' /etc/bind/zones/db.$PARENT | grep -oP '[0-9]*'`"
 	sed -i "s/.*Serial.*/\t\t\t	$((VAL+1))\t\t; Serial/g" /etc/bind/zones/db.$PARENT
-elif [ $RECORD == "CNAME" ]
+elif [[ $RECORD == "CNAME" ]]
 then
 	VAL="`grep -A 0 'Serial' /etc/bind/zones/db.$IP | grep -oP '[0-9]*'`"
 	sed -i "s/.*Serial.*/\t\t\t	$((VAL+1))\t\t; Serial/g" /etc/bind/zones/db.$IP
