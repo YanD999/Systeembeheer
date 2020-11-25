@@ -1,73 +1,45 @@
-#!/bin/bash
+k#!/bin/bash
+if [ -n $1 ]; then
+if  [[ $1 = "-t" ]]; then
+record=$2
+        if [ $record = "A" ]; then
+        echo "$3 in a $4 to db.$5"
+        echo "$3        IN      A       $4" >> /etc/bind/zones/db.$5;
+        DB="/etc/bind/zones/db.$5"
+        echo $DB
 
-# must be root
-#if [ "$EUID" -ne 0 ]
-#  then 
-#	echo "You have to be root to execute this"
-#	exit 0
-#fi
+        elif [ $record = "MX" ]; then
+        echo " @        IN      MX      10      $3.$5." >> /etc/bind/zones/db.$5
+        echo "$3        IN      A       $4" >> /etc/bind/zones/db.$5
+        DB="/etc/bind/zones/db.$5"
+        echo $DB
 
-# if option -t
-while getopts ":t:" opt; do
-  if [[ $opt == "t" ]]
-then
-        RECORD="$OPTARG"
-        SUB=$3
-        IP=$4
-        PARENT=$5
+        elif [ $record = "CNAME" ]; then
+        echo "$3        IN      CNAME   $4." >> /etc/bind/zones/db.$4
+        DB="/etc/bind/zones/db.$4"
+        echo $DB
+
+        fi
+
+        else
+        echo "$1        IN      A       $2">> /etc/bind/zones/db.$3
+        DB="/etc/bind/zones/db.$3"
+        echo "$1 $2 $DB"
+
 fi
-done
+#increase serial
+line=$(grep "Serial" "$DB")
+echo $line
+serialnumber=$(echo $line |  grep -Eo '[0-9]{1,9}')
+echo $serialnumber
+newnumber=$((serialnumber+1))
+echo $newnumber
+newserial="$newnumber   ; Serial"
+echo $newserial
+sed -i "s/.*Serial.*/\t\t\t     $newserial/g" "$DB"
 
-# if no -t option
-if [ -z "$RECORD" ]
-then
-	echo "No parameter -t given -> default A record"
-        RECORD="A"
-        SUB=$1
-        IP=$2
-        PARENT=$3
-fi
-
-# bij CNAME is sub en parent nodig
-if [[ "$RECORD" == "CNAME" ]]
-        then
-                if [ -z "$SUB" ] || [ -z "$IP" ] || [ ! -z "$PARENT" ]
-                        then echo "Geef een parent en subdomein in"
-                        exit 0
-                fi
-# bij de rest is sub, ip en parent nodig
-elif [ -z "$SUB" ] || [ -z "$IP" ] || [ -z "$PARENT" ]
-        then echo "Geef een parent, een ip en een subdomein in"
-        exit 0
-fi
-
-# case record type
-case $RECORD in
-        A)
-                echo "$SUB      IN      A       $IP" >> "/etc/bind/zones/db.$PARENT";;
-        MX)
-                echo "@ IN      MX      $SUB.$PARENT." >> "/etc/bind/zones/db.$PARENT"
-                echo "$SUB      in      A       $IP" >> "/etc/bind/zones/db.$PARENT";;
-        CNAME)
-                echo "$SUB      IN      CNAME   $IP." >> "/etc/bind/zones/db.$IP";;
-esac
-
-
-# file aangepast, dus update serial
-if [[ $RECORD == "A" ]] || [[ $RECORD == "MX" ]]
-then
-	var="`grep -A 0 'Serial' /etc/bind/zones/db.$PARENT | grep -oP '[0-9]*'`"
-	new=$((var+1))
-	sed -i "s/.*Serial.*/\t\t\t     $new\t\t; Serial/g" /etc/bind/zones/db.$PARENT 
-elif [[ $RECORD == "CNAME" ]]
-then
-        var="`grep -A 0 'Serial' /etc/bind/zones/db.$IP | grep -oP '[0-9]*'`"
-        new=$((var+1))
-        sed -i "s/.*Serial.*/\t\t\t     $new\t\t; Serial/g" /etc/bind/zones/db.$IP
-fi
-
-# reload
+#reload rndc
 rndc reload
 
-# restart bind
+#restart bind9
 systemctl restart bind9
