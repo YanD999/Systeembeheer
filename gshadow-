@@ -44,8 +44,6 @@ ssl-cert:!::
 input:!::
 kvm:!::
 render:!::
-postfix:!::
-postdrop:!::
 ssh:!::
 systemd-journal:!::
 systemd-network:!::
@@ -59,5 +57,5 @@ incron:!::
 ntp:!::
 mysql:!::
 bind:!::
-dovecot:!::
 dovenull:!::
+vmail:!::

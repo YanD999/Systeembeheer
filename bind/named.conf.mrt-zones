@@ -1,0 +1,26 @@
+
+
+zone subzoneaiw0ei.yannick-delandmeter.sb.uclllabs.be. {
+	type master;
+	file "/etc/bind/zones/db.mrt.subzoneaiw0ei.yannick-delandmeter.sb.uclllabs.be";
+};
+
+zone subzoneeeyai1.yannick-delandmeter.sb.uclllabs.be. {
+	type master;
+	file "/etc/bind/zones/db.mrt.subzoneeeyai1.yannick-delandmeter.sb.uclllabs.be";
+};
+
+zone subzonehuepa1.yannick-delandmeter.sb.uclllabs.be. {
+	type master;
+	file "/etc/bind/zones/db.mrt.subzonehuepa1.yannick-delandmeter.sb.uclllabs.be";
+};
+
+zone subzoneeghal9.yannick-delandmeter.sb.uclllabs.be. {
+	type master;
+	file "/etc/bind/zones/db.mrt.subzoneeghal9.yannick-delandmeter.sb.uclllabs.be";
+};
+
+zone subzonefu8xuu.yannick-delandmeter.sb.uclllabs.be. {
+	type master;
+	file "/etc/bind/zones/db.mrt.subzonefu8xuu.yannick-delandmeter.sb.uclllabs.be";
+};
