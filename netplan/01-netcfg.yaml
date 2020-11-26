@@ -1,0 +1,11 @@
+network:
+   version: 2
+   renderer: networkd
+   ethernets:
+      ens3:
+        dhcp4: yes
+        dhcp6: no
+        addresses:
+          - 193.191.177.223/25
+          - 2001:6a8:2880:a077::DF/64
+        gateway6: 2001:6a8:2880:a077::1
