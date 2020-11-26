@@ -3,9 +3,10 @@ network:
   renderer: networkd
   ethernets:
      eth0:
-       dhcp4: yes
+       dhcp4: no
        dhcp6: no
        addresses:
          - 193.191.177.223/25
          - 2001:6a8:2880:a077::df/64
        gateway6: 2001:6a8:2880:a077::1
+       gateway4: 193.191.177.254
