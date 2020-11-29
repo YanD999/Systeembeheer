@@ -62,3 +62,4 @@ postfix:x:108:
 postdrop:x:109:
 dovecot:x:121:
 dovenull:x:122:
+ftp:x:123:
