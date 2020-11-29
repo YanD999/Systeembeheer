@@ -34,4 +34,4 @@ vmail:x:5000:5000::/var/mail:/bin/sh
 postfix:x:102:108::/var/spool/postfix:/usr/sbin/nologin
 dovecot:x:113:121:Dovecot mail server,,,:/usr/lib/dovecot:/usr/sbin/nologin
 dovenull:x:114:122:Dovecot login user,,,:/nonexistent:/usr/sbin/nologin
-ftp:x:115:123::/srv/ftp:/usr/sbin/nologin
+ftp:x:115:123:ftp daemon,,,:/srv/ftp:/usr/sbin/nologin
