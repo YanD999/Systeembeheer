@@ -1,0 +1,15 @@
+#!/bin/bash
+
+case $1 in
+	start)
+		iptables-restore /etc/network/firewallv4.rules
+		ip6tables-restore /etc/network/firewallv6.rules;;
+	stop)
+		iptables-restore /etc/network/firewallv4.empty
+		ip6tables-restore /etc/network/firewallv6.empty;;
+	restart)
+		iptables-restore /etc/network/firewallv4.rules
+		ip6tables-restore /etc/network/firewallv6.rules
+		iptables-restore /etc/network/firewallv4.empty
+		ip6tables-restore /etc/network/firewallv6.empty;;
+esac
