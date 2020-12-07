@@ -2,14 +2,14 @@
 
 case $1 in
 	start)
-		iptables-restore /etc/network/firewallv4.rules
-		ip6tables-restore /etc/network/firewallv6.rules;;
+		iptables-restore /etc/iptables/rules.v4
+		ip6tables-restore /etc/iptables/rules.v6;;
 	stop)
-		iptables-restore /etc/network/firewallv4.empty
-		ip6tables-restore /etc/network/firewallv6.empty;;
+		iptables-restore /etc/iptables/rules.v4
+		ip6tables-restore /etc/iptables/rules.v6;;
 	restart)
-		iptables-restore /etc/network/firewallv4.rules
-		ip6tables-restore /etc/network/firewallv6.rules
-		iptables-restore /etc/network/firewallv4.empty
-		ip6tables-restore /etc/network/firewallv6.empty;;
+		iptables-restore /etc/iptables/rules.v4
+		ip6tables-restore /etc/iptables/rules.v6
+		iptables-restore /etc/iptables/rules.v4
+		ip6tables-restore /etc/iptables/rules.v6;;
 esac
